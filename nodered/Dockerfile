@@ -19,7 +19,6 @@ RUN \
         linux-headers=6.16.12-r0 \
         py3-pip=25.1.1-r1 \
         python3-dev=3.12.12-r0 \
-    \
     && apk add --no-cache \
         git=2.52.0-r0 \
         icu-data-full=76.1-r1 \
@@ -28,8 +27,6 @@ RUN \
         npm=10.5.0-r0 \
         openssh-client-default=10.2_p1-r0 \
         patch=2.8-r0 \
-
-    \
     && npm install \
         --no-audit \
         --no-fund \
@@ -37,14 +34,10 @@ RUN \
         --omit=dev \
         --unsafe-perm \
     && npm rebuild --build-from-source @serialport/bindings-cpp \
-    \
     && npm cache clear --force \
-    \
     && echo -e "StrictHostKeyChecking no" >> /etc/ssh/ssh_config \
-    \
     && patch -d /opt/node_modules/node-red-dashboard -p1 \
              -i /tmp/node-red-dashboard-show-dashboard.patch \
-    \
     && apk del --no-cache --purge .build-dependencies \
     && rm -fr \
         /etc/nginx \
